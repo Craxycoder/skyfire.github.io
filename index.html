@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rip_Jerry Family</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1e1e1e;
+            color: white;
+            transition: background 0.5s, color 0.5s;
+        }
+        header {
+            background-color: rgba(0, 191, 255, 0.9);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+        }
+        .auth-buttons button {
+            margin-left: 10px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(0, 191, 255, 0.8);
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .auth-buttons button:hover {
+            background-color: rgba(0, 191, 255, 0.6);
+        }
+        .settings-button {
+            cursor: pointer;
+            font-size: 20px;
+            color: white;
+            margin-left: 10px;
+        }
+        nav {
+            display: flex;
+            justify-content: flex-start;
+            padding: 10px 20px;
+            background-color: rgba(51, 51, 51, 0.7);
+        }
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            margin-right: 10px; /* Add space between links */
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        main {
+            padding: 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: rgba(51, 51, 51, 0.7);
+        }
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(0, 191, 255, 0.8);
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: rgba(0, 191, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Rip_Jerry Family</h1>
+    <div class="auth-buttons" id="authButtons">
+        <button onclick="showPage('signup')" id="signupButton">Sign Up</button>
+        <button onclick="showPage('login')" id="loginButton">Login</button>
+    </div>
+    <div id="logoutButton" style="display: none; display: flex; align-items: center;">
+        <span id="logoutUserName" style="margin-right: 10px;"></span>
+        <div class="settings-button" onclick="showSettings()">
+            <i class="fas fa-ellipsis-v"></i>
+        </div>
+        <a href="#" onclick="logout()" style="margin-left: 10px;">Logout</a>
+    </div>
+</header>
+
+<nav>
+    <a href="#" onclick="showPage('home')"><i class="fas fa-home"></i> Home</a>
+    <a href="#" onclick="showPage('services')">Services</a>
+    <a href="#" onclick="showPage('contact')">Contact</a>
+</nav>
+
+<main id="content">
+    <div id="home" class="page">
+        <h2>Welcome to the Rip_Jerry Family Website</h2>
+        <p>This is a simple responsive webpage template. You can modify it to suit your needs!</p>
+    </div>
+
+    <div id="about" class="page" style="display: none;">
+        <h2>About Us</h2>
+        <p>We are a family that loves gaming and sharing our experiences. Join us on our adventures and be part of the family!</p>
+    </div>
+
+    <div id="services" class="page" style="display: none;">
+        <h2>Our Services</h2>
+        <p>We offer gaming tutorials, strategy guides, community support, and live stream sessions. Stay tuned for more updates!</p>
+    </div>
+
+    <div id="contact" class="page" style="display: none;">
+        <h2>Contact Us</h2>
+        <p>You can reach us via email at contact@rip_jerry_family.com.</p>
+        <p>Snapchat: Skyfire legacy</p>
+        <p>Discord: Skyfire1206</p>
+    </div>
+
+    <div id="signup" class="page" style="display: none;">
+        <h2>Sign Up</h2>
+        <div class="form-container">
+            <form id="signupForm" onsubmit="handleSignup(event)">
+                <input type="text" id="signupUsername" placeholder="Username" required>
+                <input type="email" id="signupEmail" placeholder="Email" required>
+                <input type="password" id="signupPassword" placeholder="Password" required>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="login" class="page" style="display: none;">
+        <h2>Login</h2>
+        <div class="form-container">
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <input type="text" id="loginUsername" placeholder="Username" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="settings" class="page" style="display: none;">
+        <h2>Settings</h2>
+        <div class="form-container">
+            <label for="bgColor">Background Color:</label>
+            <input type="color" id="bgColor" value="#1e1e1e" onchange="changeBackgroundColor(this.value)">
+            
+            <label for="textColor">Text Color:</label>
+            <input type="color" id="textColor" value="#ffffff" onchange="changeTextColor(this.value)">
+            
+            <label for="buttonColor">Button Color:</label>
+            <input type="color" id="buttonColor" value="#00bfff" onchange="changeButtonColor(this.value)">
+            
+            <button onclick="showChangeUsername()">Change Username</button>
+            <div id="changeUsernameContainer" style="display: none; margin-top: 10px;">
+                <input type="text" id="newUsername" placeholder="New Username" required>
+                <button onclick="changeUsername()">Submit</button>
+            </div>
+            
+            <button onclick="hideSettings()">Close</button>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2024 Rip_Jerry Family</p>
+</footer>
+
+<script>
+    let currentUserName = '';
+
+    window.onload = function() {
+        const bgColor = localStorage.getItem('bgColor') || '#1e1e1e'; // Default color
+        const textColor = localStorage.getItem('textColor') || '#ffffff'; // Default color
+
+        // Apply the colors
+        document.body.style.backgroundColor = bgColor;
+        document.body.style.color = textColor;
+        document.getElementById('bgColor').value = bgColor;
+        document.getElementById('textColor').value = textColor;
+
+        // Check login state
+        const loggedInUser = localStorage.getItem('loggedInUser');
+        if (loggedInUser) {
+            currentUserName = loggedInUser;
+            document.getElementById('logoutUserName').innerText = `Welcome, ${currentUserName}`;
+            document.getElementById('logoutButton').style.display = 'flex'; // Show logout section
+            document.getElementById('authButtons').style.display = 'none'; // Hide auth buttons
+        }
+    };
+
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(page => page.style.display = 'none');
+        document.getElementById(pageId).style.display = 'block';
+    }
+
+    function handleSignup(event) {
+        event.preventDefault();
+        const username = document.getElementById('signupUsername').value;
+        const email = document.getElementById('signupEmail').value;
+        const password = document.getElementById('signupPassword').value;
+
+        currentUserName = username; // Save the username
+        localStorage.setItem('loggedInUser', username); // Store username in localStorage
+        localStorage.setItem('userEmail', email); // Optionally store email as well
+
+        document.getElementById('logoutUserName').innerText = `Welcome, ${currentUserName}`; // Display username
+        document.getElementById('logoutButton').style.display = 'flex'; // Show logout section
+        document.getElementById('authButtons').style.display = 'none'; // Hide auth buttons
+        alert('Sign Up successful! You can now log in.');
+        showPage('login');
+    }
+
+    function handleLogin(event) {
+        event.preventDefault();
+        const username = document.getElementById('loginUsername').value; // Get username from input
+        const password = document.getElementById('loginPassword').value; // Get password from input
+
+        // Check for the admin account
+        if (username === "Trojin" && password === "2224@enderdragon") {
+            currentUserName = username; // Save the username
+            document.getElementById('logoutUserName').innerHTML = `Welcome, ${currentUserName} ⭐`; // Add star next to admin username
+            document.getElementById('logoutButton').style.display = 'flex'; // Show logout section
+            document.getElementById('authButtons').style.display = 'none'; // Hide auth buttons
+            alert('Login successful! Welcome, Admin!');
+            showPage('home');
+        } else {
+            alert('Invalid username or password. Please try again.');
+        }
+    }
+
+    function changeBackgroundColor(color) {
+        document.body.style.backgroundColor = color;
+        localStorage.setItem('bgColor', color); // Store color in localStorage
+    }
+
+    function changeTextColor(color) {
+        document.body.style.color = color;
+        localStorage.setItem('textColor', color); // Store color in localStorage
+    }
+
+    function changeButtonColor(color) {
+        document.querySelectorAll('button').forEach(button => button.style.backgroundColor = color);
+    }
+
+    function showSettings() {
+        showPage('settings');
+    }
+
+    function hideSettings() {
+        showPage('home');
+    }
+
+    function showChangeUsername() {
+        document.getElementById('changeUsernameContainer').style.display = 'block';
+    }
+
+    function changeUsername() {
+        const newUsername = document.getElementById('newUsername').value;
+        if (newUsername) {
+            currentUserName = newUsername; // Update the username
+            localStorage.setItem('loggedInUser', newUsername); // Update localStorage
+            document.getElementById('logoutUserName').innerText = `Welcome, ${currentUserName}`; // Update displayed username
+            alert('Username changed successfully!');
+            document.getElementById('changeUsernameContainer').style.display = 'none'; // Hide the change username input
+        } else {
+            alert('Please enter a new username.');
+        }
+    }
+
+    function logout() {
+        currentUserName = '';
+        document.getElementById('logoutUserName').innerText = '';
+        document.getElementById('logoutButton').style.display = 'none';
+        document.getElementById('authButtons').style.display = 'flex'; // Show signup/login buttons again
+        localStorage.removeItem('loggedInUser'); // Remove login state
+        showPage('home');
+    }
+</script>
+
+</body>
+</html>
